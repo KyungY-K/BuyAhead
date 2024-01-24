@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  mysql:
+    image: mysql:8
+    environment:
+      MYSQL_ROOT_PASSWORD: kang5181!!
+      MYSQL_DATABASE: stock
+      MYSQL_USER: kky
+      MYSQL_PASSWORD: 5181
