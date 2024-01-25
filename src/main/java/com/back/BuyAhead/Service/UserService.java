@@ -19,6 +19,11 @@ public class UserService {
     }
 
     public User signUp(SignUpRequestDto signUpRequestDto) {
+        if (userRepository.findByEmail(signUpRequestDto.getEmail()).isPresent()) {
+            // 이미 등록된 이메일이 있을 경우 처리
+            System.out.print("중복된 이메일입니다");
+        }
+
         User newUser = new User();
         newUser.setEmail(signUpRequestDto.getEmail());
         newUser.setPassword(passwordEncoder.encode(signUpRequestDto.getPassword()));

@@ -17,13 +17,17 @@ public class SignUpController {
 
     @PostMapping("/signup")
     public ResponseEntity<String> signUp(@RequestBody SignUpRequestDto signUpRequestDto) {
-        User user = userService.signUp(signUpRequestDto);
-        if (user != null) {
-            String responseMessage = signUpRequestDto.getEmail() + "\n" + signUpRequestDto.getName() + "\n"
-                    + signUpRequestDto.getProfile_image() + "\n" + signUpRequestDto.getGreeting();
-            return ResponseEntity.ok(responseMessage);
-        } else {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("User registration failed");
+        try {
+            User user = userService.signUp(signUpRequestDto);
+            if (user != null) {
+                String responseMessage = signUpRequestDto.getEmail() + "\n" + signUpRequestDto.getName() + "\n"
+                        + signUpRequestDto.getProfile_image() + "\n" + signUpRequestDto.getGreeting();
+                return ResponseEntity.ok(responseMessage);
+            } else {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("회원가입 실패");
+            }
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("중복된 이메일입니다");
         }
     }
 }
