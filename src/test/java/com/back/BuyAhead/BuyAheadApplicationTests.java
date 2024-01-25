@@ -1,10 +1,10 @@
-package com.back.Stock;
+package com.back.BuyAhead;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class StockApplicationTests {
+class BuyAheadApplicationTests {
 
 	@Test
 	void contextLoads() {
