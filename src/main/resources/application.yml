@@ -1,12 +1,12 @@
 server:
-  port: 8081
+  port: 8080
 
-# database ?? ??
+# database
 spring:
   profiles:
     include: ignore
 
-  # spring data jpa ??
+  # spring data jpa
   jpa:
     database-platform: org.hibernate.dialect.MySQL8Dialect
     open-in-view: false
