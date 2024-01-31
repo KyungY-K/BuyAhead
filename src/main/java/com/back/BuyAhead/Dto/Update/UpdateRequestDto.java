@@ -10,4 +10,5 @@ public class UpdateRequestDto {
     private String name;
     private String profile_image;
     private String greeting;
+    private String password;
 }

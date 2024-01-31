@@ -71,6 +71,11 @@ public class UserService {
                 user.setGreeting(updateRequestDto.getGreeting());
             }
 
+            //비밀번호
+            if (updateRequestDto.getPassword() != null) {
+                user.setPassword(passwordEncoder.encode(updateRequestDto.getPassword()));
+            }
+
             return userRepository.save(user);
         } else {
             throw new IllegalArgumentException("User not found with ID: " + userId);
