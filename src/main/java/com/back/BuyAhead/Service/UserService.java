@@ -1,16 +1,31 @@
 package com.back.BuyAhead.Service;
 
 import com.back.BuyAhead.Dto.SignUp.SignUpRequestDto;
+import com.back.BuyAhead.Dto.Update.UpdateRequestDto;
 import com.back.BuyAhead.Repository.UserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.back.BuyAhead.Domain.User;
 
+import java.util.Optional;
+
 @Service
 public class UserService {
     private final PasswordEncoder passwordEncoder;
+
+    @Autowired
     private UserRepository userRepository;
+
+    public User findById(Long userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("Unexpected user"));
+    }
+
+    public boolean isEmailExists(String email) {
+        return userRepository.existsByEmail(email);
+    }
 
     @Autowired
     public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
@@ -32,5 +47,33 @@ public class UserService {
         newUser.setGreeting(signUpRequestDto.getGreeting());
 
         return userRepository.save(newUser);
+    }
+
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email).orElseThrow(() -> new IllegalArgumentException("해당 사용자가 없습니다."));
+    }
+
+    public Optional<User> searchById(Long id) {
+        return userRepository.findById(id);
+    }
+
+    public User updateUserInformation(Long userId, UpdateRequestDto updateRequestDto) {
+        Optional<User> userOptional = userRepository.findById(userId);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            if (updateRequestDto.getName() != null) {
+                user.setName(updateRequestDto.getName());
+            }
+            if (updateRequestDto.getProfile_image() != null) {
+                user.setProfile_image(updateRequestDto.getProfile_image());
+            }
+            if (updateRequestDto.getGreeting() != null) {
+                user.setGreeting(updateRequestDto.getGreeting());
+            }
+
+            return userRepository.save(user);
+        } else {
+            throw new IllegalArgumentException("User not found with ID: " + userId);
+        }
     }
 }
