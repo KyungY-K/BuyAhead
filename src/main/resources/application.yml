@@ -6,10 +6,28 @@ spring:
   profiles:
     include: ignore
 
-  # spring data jpa
-  jpa:
-    database-platform: org.hibernate.dialect.MySQL8Dialect
-    open-in-view: false
-    show-sql: true
-    hibernate:
-      ddl-auto: update
+# spring data jpa
+jpa:
+  database-platform: org.hibernate.dialect.MySQL8Dialect
+  open-in-view: false
+  show-sql: true
+  hibernate:
+  ddl-auto: update
+
+  #jwt
+jwt:
+  secretKey: ignore
+  refreshKey: ignore
+
+cloud:
+  aws:
+    s3:
+      bucket: ignore
+    credentials:
+      access-key: ignore
+      secret-key: ignore
+    region:
+      static: ignore
+      auto: false
+    stack:
+      auto: false
