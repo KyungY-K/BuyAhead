@@ -41,7 +41,7 @@ public class SignUpController {
         }
     }
 
-    @PatchMapping("/user/{id}")
+    @PatchMapping("/update/{id}")
     public ResponseEntity<?> updateUserInformation(@PathVariable Long id, @RequestBody UpdateRequestDto updateRequestDto) {
         Optional<User> userOptional = userService.searchById(id);
 
