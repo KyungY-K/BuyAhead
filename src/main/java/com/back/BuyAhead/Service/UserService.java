@@ -18,8 +18,8 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public User findById(Long userId) {
-        return userRepository.findById(userId)
+    public User findById(Long id) {
+        return userRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Unexpected user"));
     }
 
@@ -57,8 +57,8 @@ public class UserService {
         return userRepository.findById(id);
     }
 
-    public User updateUserInformation(Long userId, UpdateRequestDto updateRequestDto) {
-        Optional<User> userOptional = userRepository.findById(userId);
+    public User updateUserInformation(Long id, UpdateRequestDto updateRequestDto) {
+        Optional<User> userOptional = userRepository.findById(id);
         if (userOptional.isPresent()) {
             User user = userOptional.get();
             if (updateRequestDto.getName() != null) {
@@ -78,7 +78,11 @@ public class UserService {
 
             return userRepository.save(user);
         } else {
-            throw new IllegalArgumentException("User not found with ID: " + userId);
+            throw new IllegalArgumentException("User not found with ID: " + id);
         }
+    }
+
+    public boolean friend(Long id) {
+        return userRepository.existsById(id);
     }
 }

@@ -17,7 +17,7 @@ public class AmazonS3ResourceStorage {
 
     @Autowired
     public AmazonS3ResourceStorage(AmazonS3 amazonS3) {
-        this.bucket = "acatech";
+        this.bucket = "buyahead";
         this.amazonS3 = amazonS3;
     }
 
