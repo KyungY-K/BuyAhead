@@ -11,7 +11,7 @@ import com.back.BuyAhead.Domain.User;
 
 import java.util.Optional;
 
-@Service;
+@Service
 public class UserService {
     private final PasswordEncoder passwordEncoder;
 
