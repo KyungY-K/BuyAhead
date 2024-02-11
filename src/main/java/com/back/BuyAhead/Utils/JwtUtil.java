@@ -1,6 +1,5 @@
 package com.back.BuyAhead.Utils;
 
-import com.back.BuyAhead.Domain.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;

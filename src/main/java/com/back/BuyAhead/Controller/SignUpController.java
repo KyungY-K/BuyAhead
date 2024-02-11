@@ -3,25 +3,22 @@ package com.back.BuyAhead.Controller;
 import com.back.BuyAhead.Domain.User;
 import com.back.BuyAhead.Dto.SignUp.SignUpRequestDto;
 import com.back.BuyAhead.Dto.Update.UpdateRequestDto;
-import com.back.BuyAhead.Repository.UserRepository;
 import com.back.BuyAhead.Service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import java.util.Optional;
 
-@RequiredArgsConstructor
 @RestController
+@RequiredArgsConstructor
 public class SignUpController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
     @PostMapping("/signup")
-    public ResponseEntity<String> signUp(@RequestBody SignUpRequestDto signUpRequestDto) {
+    public ResponseEntity<?> signUp(@RequestBody SignUpRequestDto signUpRequestDto) {
         try {
             //중복된 이메일
             if (userService.isEmailExists(signUpRequestDto.getEmail())) {
@@ -36,8 +33,10 @@ public class SignUpController {
             } else {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("회원가입 실패");
             }
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("에러 발생: " + e.getMessage());
+        } catch (Exception e) {
+            // 기타 예외 발생 시 403 Forbidden 반환
+            String errorMessage = "서버 오류: " + e.getMessage();
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(errorMessage);
         }
     }
 

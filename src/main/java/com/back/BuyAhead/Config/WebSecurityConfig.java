@@ -47,7 +47,7 @@ public class WebSecurityConfig {
             sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         });
         http.authorizeHttpRequests((authorizeHttpRequests) -> {
-            ((AuthorizeHttpRequestsConfigurer.AuthorizedUrl)((AuthorizeHttpRequestsConfigurer.AuthorizedUrl)((AuthorizeHttpRequestsConfigurer.AuthorizedUrl)((AuthorizeHttpRequestsConfigurer.AuthorizedUrl)authorizeHttpRequests.requestMatchers(new RequestMatcher[]{PathRequest.toStaticResources().atCommonLocations()})).permitAll().requestMatchers(new String[]{"/"})).permitAll().requestMatchers(new String[]{"/login"})).permitAll().anyRequest()).authenticated();
+            ((AuthorizeHttpRequestsConfigurer.AuthorizedUrl)((AuthorizeHttpRequestsConfigurer.AuthorizedUrl)((AuthorizeHttpRequestsConfigurer.AuthorizedUrl)((AuthorizeHttpRequestsConfigurer.AuthorizedUrl)authorizeHttpRequests.requestMatchers(new RequestMatcher[]{PathRequest.toStaticResources().atCommonLocations()})).permitAll().requestMatchers(new String[]{"/signup"})).permitAll().requestMatchers(new String[]{"/login"})).permitAll().anyRequest()).authenticated();
         });
         http.addFilterBefore(this.jwtAuthorizationFilter(), JwtAuthenticationFilter.class);
         http.addFilterBefore(this.jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
