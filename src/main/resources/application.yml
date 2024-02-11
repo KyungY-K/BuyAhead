@@ -14,10 +14,10 @@ jpa:
   hibernate:
   ddl-auto: update
 
-  #jwt
+#jwt
 jwt:
-  secretKey: ignore
-  refreshKey: ignore
+  secret:
+    key: ignore
 
 cloud:
   aws:

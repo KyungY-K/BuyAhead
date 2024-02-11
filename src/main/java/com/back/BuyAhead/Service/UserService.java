@@ -1,9 +1,10 @@
 package com.back.BuyAhead.Service;
 
+import com.back.BuyAhead.Dto.Login.LoginRequestDto;
 import com.back.BuyAhead.Dto.SignUp.SignUpRequestDto;
 import com.back.BuyAhead.Dto.Update.UpdateRequestDto;
 import com.back.BuyAhead.Repository.UserRepository;
-import jakarta.transaction.Transactional;
+import com.back.BuyAhead.Utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,8 @@ import java.util.Optional;
 public class UserService {
     private final PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private JwtUtil jwtUtil;
     @Autowired
     private UserRepository userRepository;
 
@@ -84,5 +87,24 @@ public class UserService {
 
     public boolean friend(Long id) {
         return userRepository.existsById(id);
+    }
+
+    public String login(LoginRequestDto loginRequestDto) {
+        Optional<User> byUserEmail = userRepository.findByEmail(loginRequestDto.getEmail());
+
+        if (byUserEmail.isPresent()) {
+            User userEntity = byUserEmail.get();
+
+            if (passwordEncoder.matches(loginRequestDto.getPassword(), userEntity.getPassword())) {
+                // 로그인 성공 시 토큰 생성하여 반환
+                return jwtUtil.createToken(userEntity.getEmail());
+            } else {
+                // 비밀번호가 틀렸을 때
+                return "비밀번호가 올바르지 않습니다.";
+            }
+        } else {
+            // 이메일이 존재하지 않을 때
+            return "존재하지 않는 이메일입니다.";
+        }
     }
 }

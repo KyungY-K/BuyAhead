@@ -1,6 +1,7 @@
 package com.back.BuyAhead.Domain;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -30,4 +31,13 @@ public class User {
 
     @Column(name = "greeting", nullable = false)
     private String greeting;
+
+    @Builder
+    public User(String email, String password, String name, String profile_image, String greeting) {
+        this.email = email;
+        this.password = password;
+        this.name = name;
+        this.profile_image = profile_image;
+        this.greeting = greeting;
+    }
 }
